@@ -1,0 +1,94 @@
+{
+  "menu_admin": [
+    {
+      "text": "Perfil",
+      "icon": "mdi-account-circle",
+      "icon_color": "accent",
+      "to": {
+        "name": "config-user"
+      }
+    },
+    {
+      "text": "Calendario",
+      "icon": "mdi-calendar-account",
+      "icon_color": "accent",
+      "to": {
+        "name": "dashboard_admin"
+      }
+    },
+    {
+      "text": "Vehiculos",
+      "icon": "mdi-car",
+      "icon_color": "accent",
+      "to": {
+        "name": "vehiculos"
+      }
+    },
+    {
+      "text": "Puestos disponibles",
+      "icon": "mdi-database",
+      "icon_color": "accent",
+      "to": {
+        "name": "available-positions"
+      }
+    },
+    {
+      "text": "Clientes",
+      "icon": "mdi-account-group",
+      "icon_color": "accent",
+      "to": {
+        "name": "clientes"
+      }
+    },
+    {
+      "text": "Ingreso",
+      "icon": "mdi-arrow-right-circle-outline",
+      "icon_color": "accent",
+      "to": {
+        "name": "ingreso"
+      }
+    },
+    {
+      "text": "Parqueos",
+      "icon": "mdi-car-cog",
+      "icon_color": "accent",
+      "to": {
+        "name": "parqueos"
+      }
+    },
+    {
+      "text": "ayuda",
+      "icon": "mdi-face-agent",
+      "icon_color": "accent",
+      "to": {
+        "name": "ayuda"
+      }
+    }
+  ],
+  "menu_user": [
+    {
+      "text": "Perfil",
+      "icon": "mdi-account-circle",
+      "icon_color": "accent",
+      "to": {
+        "name": "config-user"
+      }
+    },
+    {
+      "text": "Inicio",
+      "icon": "mdi-home",
+      "icon_color": "accent",
+      "to": {
+        "name": "home"
+      }
+    },
+    {
+      "text": "Ver puestos disponibles",
+      "icon": "mdi-car",
+      "icon_color": "accent",
+      "to": {
+        "name": "scan-point"
+      }
+    }
+  ]
+}
