@@ -3,7 +3,7 @@ import VueRouter from "vue-router";
 import isAuthenticatedGuard from "./auth-guard.js";
 
 Vue.use(VueRouter);
-const TITLE = "izzi-parking";
+const TITLE = "IZZI-PARKING";
 const routes = [
   {
     path: "*",
