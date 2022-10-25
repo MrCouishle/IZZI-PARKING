@@ -5,6 +5,7 @@ import { User_Model } from "../models/model.user";
 export const login = async (req: Request, res: Response) => {
   try {
     const { user, password } = req.query;
+    console.log(user, password)
 
     const data = await User_Model.findOne(
       {
@@ -16,7 +17,7 @@ export const login = async (req: Request, res: Response) => {
       const DATA = data;
       const TOKEN = await generarJwt(data.id);
       res.json({ DATA, TOKEN });
-    } else res.json({ A: "Datos incorrectos" });
+    } else res.json({ msg: "user_2" });
   } catch (error) {
     res.json({ msg: error });
   }

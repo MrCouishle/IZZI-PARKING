@@ -13,7 +13,7 @@
               </v-card-text>
             </v-card>
           </v-col>
-          <v-col cols="12" lg="12" md="12" sm="12">
+          <!-- <v-col cols="12" lg="12" md="12" sm="12">
             <v-card elevation="4" @click="$router.push('/scan-point')">
               <v-alert border="top" colored-border type="info" elevation="4">
                 <h4>Bienvenidos estamos trabajando en algunas funcionalidades</h4>
@@ -30,7 +30,7 @@
                 />
               </v-alert>
             </v-card>
-          </v-col>
+          </v-col> -->
           <v-col cols="12" sm="12" md="12" align="center">
             <v-sheet height="64">
               <v-toolbar flat>
@@ -228,7 +228,7 @@ export default {
     },
   },
   created() {
-    this.$refs.calendar.checkChange();
+    // this.$refs.calendar.checkChange();
   },
 };
 </script>

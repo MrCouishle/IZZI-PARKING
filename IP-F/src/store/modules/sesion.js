@@ -13,10 +13,12 @@ export default {
       try {
         const { user, password } = data;
         const RES = await postData({ url: `login?user=${user}&password=${password}`, method: "GET", data });
-        if (!RES.msg) {
-          const BASE64 = JSON.stringify(RES);
+        console.log(RES)
+        if (!RES.data.msg) {
+          const BASE64 = JSON.stringify(RES.data);
           sessionStorage.auth_code = btoa(BASE64);
           location.reload();
+          return RES;
         } else return RES;
       } catch (error) {
         console.error("_loginUser", error);

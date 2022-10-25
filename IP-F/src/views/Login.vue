@@ -60,9 +60,9 @@
                     autocomplete="true"
                     label="Contraseña"
                     color="primary"
+                    maxlength="20"
                     ref="password"
                     id="password"
-                    maxlength="8"
                     outlined
                     shaped
                     dense
@@ -190,6 +190,9 @@ export default {
       if (!DATA.user) return this.sendAlert("user_0", "info");
       try {
         const RES = await this._loginUser(DATA);
+
+        RES.data.msg && this.sendAlert(RES.msg, "info");
+
       } catch (error) {
         console.error("LOGIN", error);
       }

@@ -97,5 +97,6 @@ export function nameToUper(field) {
 }
 
 const AUTH = sessionStorage.auth_code;
+// console.log(atob(AUTH))
 export let current_user = AUTH ? JSON.parse(atob(AUTH)).DATA : null;
 export const NEKOT = AUTH ? JSON.parse(atob(AUTH)).TOKEN : null;
