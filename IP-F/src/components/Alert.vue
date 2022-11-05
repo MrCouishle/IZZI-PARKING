@@ -140,6 +140,9 @@ export default {
         case "user_0":
           this.body = `Debes ingresar un usuario`;
           break;
+        case "doc_1":
+          this.body = `Este documento ya existe`;
+          break;
         case "user_1":
           this.body = `Nombre de usuario en uso`;
           break;
@@ -150,16 +153,19 @@ export default {
           this.body = `No hiciste ningún cambio`;
           break;
         case "user_post":
-          this.body = `Usuario creado correctamente`;
+          this.body = `Usuario registrado correctamente`;
           break;
         case "user_put":
           this.body = `Usuario modificado`;
+          break;
+        case "user_put_e":
+          this.body = `Error creando usuario`;
           break;
         case "user_error":
           this.body = `Error creando usuario`;
           break;
         case "user-get":
-          this.body = `Error creando usuario`;
+          this.body = `Error obteniendo usuario`;
           break;
         case "user_inac":
           this.body = `Usuario inactivo, imposible acceder`;
@@ -179,20 +185,23 @@ export default {
         case "adress_1":
           this.body = `La dirección o nombre ya existe`;
           break;
-        case "zone_1":
-          this.body = `Puesto de control creado`;
+        case "Z-000":
+          this.body = `Ocurrio un problema no se pudo crear puesto`;
           break;
-        case "zone_post":
-          this.body = `No se pudo crear el punto de control`;
+        case "Z-001":
+          this.body = `El puesto ya existe con este nombre`;
           break;
-        case "zone_delete_1":
-          this.body = `No se pudo eliminar el punto de control`;
+        case "Z-002":
+          this.body = `Puesto creado correctamente`;
           break;
-        case "zone_delete":
-          this.body = `Puesto de control eliminado`;
+        case "Z-003":
+          this.body = `No se pudo realizar la consulta de los parqueaderos`;
           break;
-        case "zone_point":
-          this.body = `Este puesto de control no tiene puntos agregados`;
+        case "Z-040":
+          this.body = `No se pudo modificar el puesto`;
+          break;
+        case "Z-042":
+          this.body = `Puesto modificado correctamente`;
           break;
         case "point_1":
           this.body = `Punto creado exitosamente`;

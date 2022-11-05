@@ -3,7 +3,7 @@ import VueRouter from "vue-router";
 import isAuthenticatedGuard from "./auth-guard.js";
 
 Vue.use(VueRouter);
-const TITLE = "IZZI-PARKING";
+const TITLE = "IZZI PARKING";
 const routes = [
   {
     path: "*",
@@ -64,12 +64,30 @@ const routes = [
         },
       },
       {
+        path: "/reservas",
+        name: "reservas",
+        component: () => import("../views/Reservas.vue"),
+        meta: {
+          requiresAuth: true,
+          title: `${TITLE} - Reservas`,
+        },
+      },
+      {
         path: "/availablepositions",
         name: "available-positions",
         component: () => import("../views/AvailablePositions.vue"),
         meta: {
           requiresAuth: true,
           title: `${TITLE} - Puestos Disponibles`,
+        },
+      },
+      {
+        path: "/admin-position",
+        name: "admin-position",
+        component: () => import("../views/admin/AdminPosition.vue"),
+        meta: {
+          requiresAuth: true,
+          title: `${TITLE} - Admininstrar Puestos`,
         },
       },
       {
@@ -88,6 +106,15 @@ const routes = [
         meta: {
           requiresAuth: false,
           title: `${TITLE} - Escanear punto`,
+        },
+      },
+      {
+        path: "/helps",
+        name: "helps",
+        component: () => import("../views/user/Helps.vue"),
+        meta: {
+          requiresAuth: false,
+          title: `${TITLE} - Ayudas`,
         },
       },
     ],

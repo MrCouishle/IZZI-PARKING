@@ -2,7 +2,7 @@
   <v-card style="height: 100%">
     <v-img :src="require('../assets/image/fondo.jpg')" style="height: 100%" class="mx-auto" disabled>
       <v-hover v-slot="{ hover }" open-delay="100">
-        <v-card :elevation="hover ? 12 : 10" :loading="state_loading" class="mx-auto my-8" width="400" shaped>
+        <v-card :elevation="hover ? 12 : 10" :loading="_stateLoading" class="mx-auto my-8" width="400" shaped>
           <v-card-text class="mt-0 text-title">
             <h1 class="primary--text text-center">Iniciar sesión</h1>
           </v-card-text>
@@ -23,55 +23,16 @@
             </v-col>
             <v-col cols="12" lg="12" sm="12" md="12" class="py-0 my-0">
               <v-row justify="center">
-                <v-col cols="12" lg="9" sm="9" md="9" class="text-center">
-                  <v-text-field
-                    onkeypress="return (event.charCode > 47 && event.charCode < 123)"
-                    @keydown.enter="nextAction(form, change, validate(form.user))"
-                    @input="(val) => (form.user = form.user.toUpperCase())"
-                    prepend-icon="mdi-account-circle"
-                    @focus="change = 'user'"
-                    placeholder="Usuario"
-                    v-model="form.user"
-                    color="primary"
-                    label="Usuario"
-                    maxlength="10"
-                    autocomplete
-                    class="mt-6"
-                    type="user"
-                    ref="user"
-                    autofocus
-                    id="user"
-                    outlined
-                    shaped
-                    dense
-                  />
-                  <v-text-field
-                    onkeypress="return (event.charCode > 47 && event.charCode < 123)"
-                    :append-icon="showPassword ? ' mdi-eye' : 'mdi-eye-off'"
-                    @keydown.enter="nextAction(form, change, null, login())"
-                    @keydown.esc="nextAction(form, change)"
-                    @click:append="showPassword = !showPassword"
-                    :type="showPassword ? 'text' : 'password'"
-                    placeholder="Ingresa Contraseña"
-                    @focus="change = 'password'"
-                    :disabled="state_loading"
-                    v-model="form.password"
-                    prepend-icon="mdi-lock"
-                    autocomplete="true"
-                    label="Contraseña"
-                    color="primary"
-                    maxlength="20"
-                    ref="password"
-                    id="password"
-                    outlined
-                    shaped
-                    dense
-                  />
+                <v-col cols="12" md="9" sm="9" xl="9" lg="9" class="py-0">
+                  <INPUT :field="form.email" />
+                </v-col>
+                <v-col cols="12" md="9" sm="9" xl="9" lg="9" class="py-0">
+                  <INPUT :field="form.password" />
                 </v-col>
                 <v-col cols="12">
                   <v-row justify="center">
                     <h5 class="primary--text text-h7 py-1">¿No tienes una cuenta?</h5>
-                    <v-btn small text class="zoomIt" color="success" @click="registro()">crear cuenta</v-btn>
+                    <v-btn small text class="zoomIt" color="success" @click="register_usuario.estado = true">crear cuenta</v-btn>
                   </v-row>
                 </v-col>
                 <v-col cols="12" lg="9" md="9" sm="9" class="text-center">
@@ -79,8 +40,7 @@
                     <v-btn
                       class="mx-auto mt-0 mb-4 py-0 botone"
                       :elevation="hover ? 12 : 0"
-                      :disabled="state_loading"
-                      :loading="state_loading"
+                      :loading="_stateLoading"
                       @click="login()"
                       color="primary"
                       rounded
@@ -108,34 +68,61 @@
         </v-card>
       </v-hover>
     </v-img>
-    <ALERT @cancelAlert="cancelAlert()" @confirm="confirm()" @exitEsc="cancel()" @cancel="cancel()" v-if="alert.state" :alert="alert"></ALERT>
+    <RegisterUser :register_usuario="register_usuario" v-if="register_usuario.estado" />
+    <ALERT @confirm="confirm()" @cancel="cancel()" v-if="alert.state" :alert="alert"></ALERT>
   </v-card>
 </template>
 
 <script>
-import { controller } from "@/mixins/controler";
+import RegisterUser from "../components/user/RegisterCount.vue";
 import { mapActions, mapGetters } from "vuex";
 import LottieAnimation from "lottie-web-vue";
-import { Alert } from "@/mixins/alert";
-
+import { Alert } from "../mixins/alert";
+import { INPUT } from "@/mixins/global";
 export default {
   name: "Login",
   components: {
     LottieAnimation,
+    RegisterUser,
   },
-  mixins: [Alert, controller],
-  data: () => ({
-    form: {
-      user: "",
-      password: "",
-    },
-    change: "",
-    loader: null,
-    showPassword: false,
-  }),
+  mixins: [Alert, INPUT],
+  data() {
+    return {
+      register_usuario: {
+        estado: false,
+      },
+
+      form: {
+        email: {
+          value: "",
+          tipo: "email",
+          id: "email",
+          label: "Email",
+          type: "email",
+          maxlength: "50",
+          prepend_icon: "mdi-account-circle",
+          rules: [(v) => !!v || "Email es requerido", (v) => /.+@.+\..+/.test(v) || "Email no es valido"],
+        },
+        password: {
+          value: "",
+          tipo: "password",
+          id: "password",
+          label: "Contraseña",
+          type: "password",
+          maxlength: "20",
+          show_password: false,
+          prepend_icon: "mdi-lock",
+          rules: [(v) => !!v || "Contraseña es requerida"],
+        },
+      },
+      change: "",
+      loader: null,
+      showPassword: false,
+    };
+  },
   computed: {
     ...mapGetters({
-      state_loading: "stateLoading_",
+      _stateLoading: "_stateLoading",
     }),
   },
   watch: {
@@ -155,16 +142,10 @@ export default {
     ...mapActions({
       _loginUser: "sesion/_loginUser",
     }),
-    cancelAlert() {
-      this.deletAlert();
-      setTimeout(() => {
-        this.$refs.user.focus();
-      }, 100);
-    },
     cancel() {
       this.deletAlert();
       setTimeout(() => {
-        this.$refs.user.focus();
+        document.getElementById("email").focus();
       }, 100);
     },
     validate(value) {
@@ -185,20 +166,22 @@ export default {
       }
     },
     async login() {
-      const DATA = this.form;
-
-      if (!DATA.user) return this.sendAlert("user_0", "info");
+      const data = this.form;
+      if (!data.email.value) return this.sendAlert("user_0", "info");
       try {
-        const RES = await this._loginUser(DATA);
-
-        RES.data.msg && this.sendAlert(RES.msg, "info");
-
+        const data_ = {
+          email: data.email.value,
+          password: data.password.value,
+        };
+        const RES = await this._loginUser({ data_ });
+        console.log(RES);
+        RES.msg && this.sendAlert(RES.msg, "error");
       } catch (error) {
-        console.error("LOGIN", error);
+        console.error("login", error);
       }
     },
     eonia() {
-      window.open("http://www.eonia.com.co");
+      // window.open("http://www.eonia.com.co");
     },
   },
 };
