@@ -2,18 +2,23 @@ import mongoose, { Schema, model, mongo } from "mongoose";
 mongoose.pluralize(null);
 
 interface Users {
+  type_document: String;
   phone_number: string;
   level_user: string;
   last_name: string;
-  name: string;
+  document: String;
   password: string;
-  document: string;
-  username: String;
+  email: String;
   state: string;
+  name: string;
 }
-
 const users_schema = new Schema<Users>(
   {
+    type_document: {
+      type: String,
+      required: true,
+      enum: ["0", "1", "2"],
+    },
     password: {
       type: String,
       required: true,
@@ -27,7 +32,7 @@ const users_schema = new Schema<Users>(
       type: String,
       required: true,
     },
-    username: {
+    email: {
       type: String,
       required: true,
       unique: true,
@@ -38,7 +43,6 @@ const users_schema = new Schema<Users>(
     },
     phone_number: {
       type: String,
-      required: true,
     },
     level_user: {
       type: String,

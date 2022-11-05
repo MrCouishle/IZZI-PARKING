@@ -1,15 +1,14 @@
-import { Request, Response } from "express";
+import { json, Request, Response } from "express";
 import { generarJwt } from "../helpers/jwtGenerator";
 import { User_Model } from "../models/model.user";
 
 export const login = async (req: Request, res: Response) => {
   try {
     const { user, password } = req.query;
-    console.log(user, password)
 
     const data = await User_Model.findOne(
       {
-        $and: [{ username: user }, { password: password }],
+        $and: [{ email: user }, { password: password }],
       },
       { password: 0 }
     );
@@ -32,6 +31,7 @@ export const getUsers = async (req: Request, res: Response) => {
 };
 export const createUser = async (req: Request, res: Response) => {
   try {
+    console.log(req.body);
     new User_Model(req.body).save((error) => {
       if (error) {
         res.json({ msg: error });
@@ -56,16 +56,39 @@ export const getUser = async (req: Request, res: Response) => {
 export const putUser = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
-    
+
     const data = req.body;
-    console.log("XXX", id, data);
     const edit = await User_Model.updateOne({ _id: id }, data, { runValidators: true });
-    res.json(edit);
+    if (edit) res.json({ S: "user_put" });
+    else res.json({ msg: "user_put_e" });
+  } catch (error) {
+    res.json({ msg: error });
+    console.error(error);
+  }
+};
+
+export const putUserPassword = async (req: Request, res: Response) => {
+  try {
+    const { id, password } = req.params;
+    const data = req.body;
+
+    const edit = await User_Model.updateOne(
+      {
+        $and: [{ _id: id }, { password: password }],
+      },
+      data,
+      { runValidators: true }
+    );
+    console.log("editar", edit);
+    if (edit) {
+      res.json({ S: "user_put" });
+    } else {
+      res.json({ msg: "user_put_e" });
+    }
   } catch (error) {
     res.json(error);
     console.error(error);
   }
-
 };
 export const deleteUser = async (req: Request, res: Response) => {
   try {

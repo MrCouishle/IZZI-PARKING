@@ -14,13 +14,14 @@ const LocationSchema = new Schema<Location>(
     },
     state: {
       type: String,
-      default: "1",
+      default: "0",
       required: true,
-      enum: ["1", "2", "3"],
+      enum: ["0", "1", "2"],
     },
     name: {
       type: String,
       required: true,
+      unique: true,
     },
   },
   { versionKey: false }
