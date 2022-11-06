@@ -4,7 +4,7 @@
       <v-spacer></v-spacer>
       <div>
         <lottie-animation
-          :animationData="require('@/assets/image/watchman.json')"
+          :animationData="require('@/assets/image/parking.json')"
           class="mx-auto mr-2 botone"
           style="height: 50px"
           :autoPlay="true"
