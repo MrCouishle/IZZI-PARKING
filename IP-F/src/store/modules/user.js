@@ -29,7 +29,7 @@ export default {
       try {
         console.log("_getUser");
         const RES = await postData({ header: { x_token: NEKOT }, method: "GET", url: `get&users` });
-        console.log(RES);
+        console.log("Esta es res de USERS:", RES);
         if (!RES.msg) {
           commit("setUserData_", {
             list: "get_users",

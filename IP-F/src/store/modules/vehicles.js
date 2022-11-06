@@ -34,5 +34,13 @@ export default {
               console.error("_getvehiculos", error);
             }
           },
+          async _deleteVehicle({ commit }, { placa }) {
+            try {
+              const RES = await postData({ url: `delet&vehiculo/${placa}`, header: { x_token: NEKOT }, method: "DELETE" });
+              return RES;
+            } catch (error) {
+              console.error("deleteZone_", error);
+            }
+          },
     },
 };

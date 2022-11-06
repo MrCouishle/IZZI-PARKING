@@ -16,10 +16,10 @@
           <v-card-text class="primary--text">
             <v-form ref="form" v-model="valid" lazy-validation>
               <v-row justify="center" class="mt-10">
-                <v-col cols="12" lg="4" sm="4" md="4" class="py-0 px-2">
+                <v-col cols="12" lg="3" sm="3" md="3" class="py-0 px-2">
                   <v-text-field v-model="form.hora" label="Hora" type="time" ref="hora" required outlined filled shaped dense></v-text-field>
                 </v-col>
-                <v-col cols="12" lg="4" sm="4" md="4" class="py-0 px-2">
+                <v-col cols="12" lg="3" sm="3" md="3" class="py-0 px-2">
                   <v-text-field
                     v-model="form.fecha"
                     :maxlength="'17'"
@@ -34,7 +34,24 @@
                     dense
                   ></v-text-field>
                 </v-col>
-                <v-col cols="12" lg="4" sm="4" md="4" class="py-0 px-2">
+                <!-- <v-col cols="12" lg="3" sm="3" md="3" class="py-0 px-2">
+                  <v-autocomplete
+                    v-model="form.type"
+                    :maxlength="'17'"
+                    label="Tipo de vehículo"
+                    ref="tipo"
+                    id="tipo"
+                    required
+                    outlined
+                    filled
+                    shaped
+                    dense
+                  ></v-autocomplete>
+                </v-col> -->
+                <v-col cols="12" lg="3" sm="3" md="3" class="py-0 px-2">
+                  <AUTOCOMPLETE :field="form.tipo" />
+                </v-col>
+                <v-col cols="12" lg="3" sm="3" md="3" class="py-0 px-2">
                   <v-autocomplete
                     v-model="form.puesto"
                     :maxlength="'17'"
@@ -74,15 +91,33 @@
 </template>
 <script>
 import { current_user } from "@/global";
+import { INPUT, AUTOCOMPLETE } from "@/mixins/global";
 import { mapGetters, mapActions } from "vuex";
 export default {
+  mixins: [INPUT, AUTOCOMPLETE],
   data: () => ({
     valid: false,
-    form: {
+    vehicle: {
       hora: "",
       fecha: "",
+      tipo:"",
       puesto: "",
+      _id:"",
     },
+    form: {
+      tipo: {
+          value: "",
+          id: "tipo",
+          label: "Tipo de vehículo",
+          required: true,
+          item_value: "id",
+          items: [
+            { id: "0", text: "Moto" },
+            { id: "1", text: "Carro" },
+          ],
+          rules: [(v) => !!v || "Dato obligatorio"],
+        },
+    }
   }),
   computed: {
     ...mapGetters({
@@ -93,11 +128,13 @@ export default {
     ...mapActions({
       _getReserva: "reserva/_getReserva",
       _addReserva: "reserva/_addReserva",
+      _getZones: "zone/_getZones",
     }),
     async registrarReserva() {
       const DATA = {
         hora: this.form.hora,
         fecha: this.form.fecha,
+        type: this.form.type,
         puesto: this.form.puesto,
         usuario: current_user._id,
       };
@@ -106,6 +143,7 @@ export default {
   },
   async created() {
     this._getReserva();
+    this._getZones();
   },
 };
 </script>
