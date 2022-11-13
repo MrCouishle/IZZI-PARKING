@@ -14,22 +14,25 @@
               <v-container>
                 <v-form v-model="validate" ref="form" lazy-validation class="mt-10">
                   <v-row justify="center" class="px-5">
-                    <v-col cols="12" md="4" sm="4" xl="4" lg="4" class="py-0">
+                    <v-col cols="12" md="2" sm="2" xl="2" lg="2" class="py-0">
                       <INPUT :field="form.date_init" />
                     </v-col>
-                    <v-col cols="12" md="4" sm="4" xl="4" lg="4" class="py-0">
+                    <v-col cols="12" md="2" sm="2" xl="2" lg="2" class="py-0">
                       <INPUT :field="form.time_init" />
                     </v-col>
-                    <v-col cols="12" md="4" sm="4" xl="4" lg="4" class="py-0">
+                    <!-- <v-col cols="12" md="4" sm="4" xl="4" lg="4" class="py-0">
                       <INPUT :field="form.date_end" />
                     </v-col>
                     <v-col cols="12" md="4" sm="4" xl="4" lg="4" class="py-0">
                       <INPUT :field="form.time_end" />
-                    </v-col>
-                    <v-col cols="12" md="4" sm="4" xl="4" lg="4" class="py-0">
+                    </v-col> -->
+                    <v-col cols="12" md="2" sm="2" xl="2" lg="2" class="py-0">
                       <INPUT :field="form.placa" />
                     </v-col>
-                    <v-col cols="12" md="4" sm="4" xl="4" lg="4" class="py-0">
+                    <v-col cols="6" md="3" sm="3" xl="3" lg="3" class="py-0">
+                      <AUTOCOMPLETE :field="form.type_vehicle" />
+                    </v-col>
+                    <v-col cols="12" md="2" sm="2" xl="2" lg="2" class="py-0">
                       <AUTOCOMPLETE :field="form.puesto" />
                     </v-col>
                   </v-row>
@@ -38,7 +41,7 @@
             </v-card-text>
             <v-card-actions>
               <v-spacer></v-spacer>
-              <div class="mr-5 mb-3">
+              <div class="mr-12 mb-3">
                 <v-btn color="primary" class="botone" @click="option.state = false"> Cancelar </v-btn>
                 <v-btn color="green" class="botone ml-2" dark @click="addEntry()"> Registrar </v-btn>
               </div>
@@ -54,7 +57,10 @@
 <script>
 import { INPUT, AUTOCOMPLETE } from "../../mixins/global";
 import { mapActions, mapGetters } from "vuex";
+import { printComanda } from "../../pdf/index";
 import { Alert } from "@/mixins/alert";
+import { current_user, imageBase64_ } from "@/global";
+import moment from "moment";
 
 export default {
   mixins: [INPUT, AUTOCOMPLETE, Alert],
@@ -65,20 +71,22 @@ export default {
     return {
       validate: false,
       _id: "",
+      _id_ticket: "",
+      print: false,
       form: {
         date_init: {
-          value: "",
-          tipo: "date",
+          value: moment().format("DD/MM/YYYY"),
           id: "date_init",
           label: "Fecha ingreso",
           maxlength: "10",
+          disabled: true,
           rules: [(v) => !!v || "Fecha es requerida"],
         },
         time_init: {
-          value: "",
-          tipo: "time",
+          value: moment().format("LTS"),
           id: "time_init",
           label: "Hora ingreso",
+          disabled: true,
           maxlength: "10",
           rules: [(v) => !!v || "Hora es requerida"],
         },
@@ -107,6 +115,17 @@ export default {
           rules: [(v) => !!v || "La placa es requerida"],
         },
 
+        type_vehicle: {
+          value: "",
+          id: "type_vehicle",
+          label: "Tipo",
+          required: true,
+          item_value: "type",
+          item_text: "type",
+          items: [],
+          rules: [(v) => !!v || "Obligatorio"],
+        },
+
         puesto: {
           value: "",
           id: "puesto",
@@ -122,22 +141,55 @@ export default {
   },
   watch: {},
   computed: {
-    ...mapGetters({ getZone: "zone/getZone" }),
+    ...mapGetters({
+      getZone: "zone/getZone",
+      getVehicle: "vehicle/getVehicle",
+    }),
   },
   async mounted() {
     await this._loadZones();
+    await this._getVehicles();
+    this.form.type_vehicle.items = this.getVehicle("vehicle");
     this.form.puesto.items = this.getZone("zone").filter((e) => ["0", "1"].includes(e.state));
-    console.log(this.form.puesto.items);
+    let a = moment().format("dd/MM/YYYY");
+    console.log(a);
   },
   methods: {
     ...mapActions({
       _postEntry: "entry/_postEntry",
       _loadZones: "zone/_getZones",
+      _getVehicles: "vehicle/_getVehicles",
+      _getVehicle: "vehicle/_getVehicle",
     }),
 
     cancel() {
       this.deletAlert();
-      this.option.state = false;
+      if (this.print) {
+        setTimeout(() => this.sendAlert("pdf-c", "info", "", "P"), 200);
+        this.print = false;
+      }
+    },
+    async confirm() {
+      const type = this.form.type_vehicle.value;
+      const type_ = await this._getVehicle({ type });
+
+      const data = {
+        date_init: this.form.date_init.value,
+        time_init: this.form.time_init.value,
+        date_end: this.form.date_end.value,
+        time_end: this.form.time_end.value,
+        placa: this.form.placa.value,
+        puesto: this.form.puesto.value,
+        type_vehicle: type_.type,
+        fare: type_.fare,
+        name: `${current_user.name} ${current_user.last_name}`,
+        id_ticket: this._id_ticket,
+      };
+      console.log(data);
+      let image = await imageBase64_(require("../../assets/image/Logo.jpeg"));
+      printComanda(data, image);
+
+      this.deletAlert();
     },
     async addEntry() {
       const data_ = {
@@ -146,13 +198,14 @@ export default {
         date_end: this.form.date_end.value,
         time_end: this.form.time_end.value,
         placa: this.form.placa.value,
+        type_vehicle: this.form.type_vehicle.value,
         puesto: this.form.puesto.value,
       };
       const RES = await this._postEntry({ data_ });
-      console.log(RES);
+      this._id_ticket = RES.data._id;
       if (RES.S) {
+        this.print = true;
         this.sendAlert(RES.S, RES.alert);
-        this.$refs.form.reset();
       } else this.sendAlert(RES.msg, RES.alert);
     },
   },

@@ -7,7 +7,7 @@
             <v-card-text class="text-title primary--text mt-0">
               <h2 class="text-start">
                 <v-icon color="primary" class="mb-1">mdi-car</v-icon>
-                Administración vehiculos
+                Administrar vehículos
               </h2>
             </v-card-text>
           </v-card>
@@ -25,7 +25,7 @@
             solo
           ></v-text-field>
           <v-btn color="primary" class="my-4 botone" dark elevation="10" @click="addVehicle()">
-            Registrar vehiculo
+            Registrar vehículo
             <v-icon class="ml-2">mdi-car</v-icon>
           </v-btn>
         </v-col>
@@ -39,16 +39,12 @@
             :headers="headers"
             :search="search"
           >
-            <template v-slot:[`item.placa`]="{ item }">
+            <template v-slot:[`item.type`]="{ item }">
               <v-chip color="accent" dark>
-                {{ item.placa }}
+                {{ item.type }}
               </v-chip>
             </template>
-            <template v-slot:[`item.favorite`]="{ item }">
-              <v-icon small class="mr-2" :color="`${item.favorite == '1' ? 'yellow' : ''}`" @click="editFavorite(item)">
-                {{ `${item.favorite == "0" ? "mdi-star-outline" : "mdi-star"}` }}
-              </v-icon>
-            </template>
+
             <template v-slot:[`item.actions`]="{ item }">
               <v-icon small class="mr-2" @click="editVehicle(item)"> mdi-pencil </v-icon>
               <v-icon small @click="comfirDelete(item)" color="red"> mdi-delete </v-icon>
@@ -69,6 +65,7 @@
 <script>
 import EditAddVehicle from "@/components/vehicle/EditAddVehicle.vue";
 import { mapActions, mapGetters } from "vuex";
+import { formatNum_ } from "../../global";
 import { Alert } from "@/mixins/alert";
 
 export default {
@@ -87,10 +84,9 @@ export default {
       confir_delete: false,
       _id: "",
       headers: [
-        { text: "Placa", value: "placa", align: "center" },
         { text: "Tipo", value: "type", align: "center" },
-        { text: "Color", align: "center", value: "color" },
-        { text: "Actions", value: "actions", sortable: false },
+        { text: "Tarifa", value: "fare", align: "center" },
+        { text: "Opción", value: "actions", sortable: false },
       ],
     };
   },
@@ -108,6 +104,7 @@ export default {
       _getVehicles: "vehicle/_getVehicles",
       _deleteVehicle: "vehicle/_deleteVehicle",
     }),
+    formatNum_,
     cancel() {
       this.deletAlert();
     },
@@ -135,9 +132,8 @@ export default {
         state: true,
         option_text: "edit",
         icon: "mdi-car",
-        color: item.color,
-        placa: item.placa,
         type: item.type,
+        fare: item.fare,
         _id: item._id,
       };
     },
