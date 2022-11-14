@@ -6,7 +6,7 @@
             <v-card-text class="text-title primary--text mt-0">
               <h2 class="text-start">
                 <v-icon color="primary" class="mb-1">mdi-video</v-icon>
-                Ayuda > Video guias
+                Ayuda > Video guías
               </h2>
             </v-card-text>
           </v-card>
@@ -46,22 +46,22 @@ export default {
     return {
       data: [
         {
-          title: "Guía#1:Como registrarse, e Iniciar sesión en IZZI PARKING",
+          title: "Guía #1: Como registrarse e Iniciar sesión en IZZI PARKING",
           video: "https://www.youtube.com/embed/-CLCwIBzBbs",
           descrip: "Descripción:",
         },
         {
-          title: "Guía#2:Como realizar reservas  en IZZI PARKING",
+          title: "Guía #2: Como realizar reservas en IZZI PARKING",
           video: "https://www.youtube.com/embed/-CLCwIBzBbs",
           descrip: "Descripción:",
         },
         {
-          title: "Guía#3:Como configurar tu perfil en IZZI PARKING",
+          title: "Guía #3: Como configurar tu perfil en IZZI PARKING",
           video: "https://www.youtube.com/embed/-CLCwIBzBbs",
           descrip: "Descripción:",
         },
         {
-          title: "Guía#4:Como visualizar puestos disponibles en IZZI PARKING",
+          title: "Guía #4: Como visualizar puestos disponibles en IZZI PARKING",
           video: "https://www.youtube.com/embed/-CLCwIBzBbs",
           descrip: "Descripción",
         },
