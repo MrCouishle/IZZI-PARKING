@@ -48,22 +48,22 @@ export default {
         {
           title: "Guía #1: Como registrarse e Iniciar sesión en IZZI PARKING",
           video: "https://www.youtube.com/embed/-CLCwIBzBbs",
-          descrip: "Descripción:",
+          descrip: "Descripción: Como primer paso se hará click en el botón de crear cuenta donde se desplegará una ventana donde se diligenciaran los datos que estén para poder así crear la cuenta y así seguir a iniciar sesión con el correo y con la contraseña asignada  ",
         },
         {
           title: "Guía #2: Como realizar reservas en IZZI PARKING",
           video: "https://www.youtube.com/embed/-CLCwIBzBbs",
-          descrip: "Descripción:",
+          descrip: "Descripción: Ya dentro del aplicativo nos dirigiremos a el menú lateral y le daremos click a las reservas donde tendremos que llenar unos datos. Adicional como administrador podremos visualizar las reservas en el calendario.",
         },
         {
           title: "Guía #3: Como configurar tu perfil en IZZI PARKING",
           video: "https://www.youtube.com/embed/-CLCwIBzBbs",
-          descrip: "Descripción:",
+          descrip: "Descripción: Ya dentro del aplicativo nos dirigiremos a el menú lateral y le daremos click al botón de perfil y en ese apartado podremos configurar nuestro perfil y realizar cambios ",
         },
         {
           title: "Guía #4: Como visualizar puestos disponibles en IZZI PARKING",
           video: "https://www.youtube.com/embed/-CLCwIBzBbs",
-          descrip: "Descripción",
+          descrip: "Descripción: Ya dentro del aplicativo nos dirigiremos a el menú lateral y le daremos click al botón de gestión de puestos y a continuación al de puestos disponibles donde nos mostrará los apartados de los parqueaderos de carro y moto, donde se señalara que los verdes son disponibles, rojos ocupados y amarillos reservados.",
         },
       ],
     };
