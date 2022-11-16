@@ -47,7 +47,7 @@ export default function ({ items, header, fecha_ini, fecha_fin }) {
         title: "Reportes IZZI-PARKING",
         author: "Cristian",
       },
-      // userPassword: "IZZIPARKING",
+      userPassword: "IZZIPARKING",
       watermark: { text: "IZZI-PARKING", color: "gray", opacity: 0.2 },
       pageMargins: [20, 95, 20, 60],
       header: function (currentPage, pageCount) {
