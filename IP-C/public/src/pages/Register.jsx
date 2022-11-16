@@ -37,24 +37,24 @@ export default function Register() {
     const { password, confirmPassword, username, email } = values;
     if (password !== confirmPassword) {
       toast.error(
-        "La contraseña y la contraseña de confirmación deben ser las mismas.",
+        "Password and confirm password should be same.",
         toastOptions
       );
       return false;
     } else if (username.length < 3) {
       toast.error(
-        "El nombre de usuario debe tener más de 3 caracteres.",
+        "Username should be greater than 3 characters.",
         toastOptions
       );
       return false;
     } else if (password.length < 8) {
       toast.error(
-        "La contraseña debe ser mayor o igual a 8 caracteres.",
+        "Password should be equal or greater than 8 characters.",
         toastOptions
       );
       return false;
     } else if (email === "") {
-      toast.error("El correo es requerido", toastOptions);
+      toast.error("Email is required.", toastOptions);
       return false;
     }
 
@@ -94,25 +94,25 @@ export default function Register() {
           </div>
           <input
             type="text"
-            placeholder="Nomlbre de usuario"
+            placeholder="Username"
             name="username"
             onChange={(e) => handleChange(e)}
           />
           <input
             type="email"
-            placeholder="Correo"
+            placeholder="Email"
             name="email"
             onChange={(e) => handleChange(e)}
           />
           <input
             type="password"
-            placeholder="Contraseña"
+            placeholder="Password"
             name="password"
             onChange={(e) => handleChange(e)}
           />
           <input
             type="password"
-            placeholder="Confirmar contraseña"
+            placeholder="Confirm Password"
             name="confirmPassword"
             onChange={(e) => handleChange(e)}
           />
