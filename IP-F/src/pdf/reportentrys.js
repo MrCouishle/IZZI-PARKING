@@ -39,7 +39,7 @@ var format_item = (item) => {
 export default function ({ items, header, fecha_ini, fecha_fin }) {
   console.log(header);
   return new Promise((resolve) => {
-    let headers = ["Fecha inicio", "Hora ingreso", "Tipo vehiculo", "Placa", "Puesto", "Fecha salida", "Hora salida"].map((el) => {
+    let headers = ["Fecha inicio", "Hora ingreso", "Tipo vehículo", "Placa", "Puesto", "Fecha salida", "Hora salida"].map((el) => {
       return { text: el, fontSize: 9, bold: true, alignment: "center" };
     });
     var dd = {
