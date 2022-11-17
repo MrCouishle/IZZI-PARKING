@@ -196,7 +196,6 @@ export default {
         this._id = RES._id;
       } else {
         cleanForm_(this.form);
-        this.$refs.form.resetValidation();
         this.sendAlert("E-005", "info");
       }
     },
@@ -220,6 +219,9 @@ export default {
       printComanda(data, image);
 
       this.deletAlert();
+      setTimeout(() => {
+        location.reload();
+      }, 100);
     },
     async editEntry() {
       const data_ = {
