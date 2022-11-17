@@ -97,7 +97,7 @@ function llenarFormato(item) {
                 { text: item.id_ticket.slice(0, 10), border: [false, false, false, false] },
               ],
               [
-                { text: " Fecha de ingreso ", bold: true, border: [false, false, false, false] },
+                { text: " Fecha ingreso ", bold: true, border: [false, false, false, false] },
                 { text: item.date_init, border: [false, false, false, false] },
               ],
               [
@@ -105,7 +105,7 @@ function llenarFormato(item) {
                 { text: item.time_init, border: [false, false, false, false] },
               ],
               [
-                { text: " Fecha de salida ", bold: true, border: [false, false, false, false] },
+                { text: " Fecha salida ", bold: true, border: [false, false, false, false] },
                 { text: item.date_end, border: [false, false, false, false] },
               ],
               [

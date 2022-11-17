@@ -48,7 +48,7 @@ export default function ({ items, header, fecha_ini, fecha_fin }) {
         author: "Cristian",
       },
       userPassword: "IZZIPARKING",
-      watermark: { text: "IZZI-PARKING", color: "gray", opacity: 0.2 },
+      watermark: { text: "IZZI PARKING", color: "gray", opacity: 0.2 },
       pageMargins: [20, 95, 20, 60],
       header: function (currentPage, pageCount) {
         return [
@@ -57,10 +57,10 @@ export default function ({ items, header, fecha_ini, fecha_fin }) {
             columns: [
               estructure_image(header.logo),
               {
-                alignment: "center",
+                alignment: "start",
                 stack: [
                   { text: header.name, bold: true, fontSize: 16 },
-                  { text: "REPORTES DE INGRESOS IZZIPARKING", bold: true, fontSize: 12 },
+                  { text: "REPORTES DE INGRESOS IZZI PARKING", bold: true, fontSize: 12 },
                   {
                     text: header.author + " " + header.document,
                     bold: true,
